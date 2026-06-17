@@ -84,16 +84,25 @@ def status(cwd: Path | str | None = None) -> str:
 
 
 def current_bookmark(cwd: Path | str | None = None) -> str | None:
-    """Return the bookmark pointing at the current working-copy commit, if any.
+    """Return the nearest bookmark at or behind the working copy, if any.
 
-    Uses a template over the ``@`` revision so the result is machine-readable.
+    After ``jj new <branch>`` the working copy is an empty child of the branch,
+    so the bookmark sits on an ancestor. ``latest(::@ & bookmarks())`` finds the
+    closest ancestor that carries a bookmark.
     """
     out = _run(
-        ["log", "-r", "@", "--no-graph", "-T", 'bookmarks.join("\n")'],
+        [
+            "log",
+            "-r",
+            "latest(::@ & bookmarks())",
+            "--no-graph",
+            "-T",
+            'bookmarks.join("\n")',
+        ],
         cwd=cwd,
     ).strip()
     if not out:
         return None
-    # Strip jj's trailing markers like "name*" (conflicted) / "name@origin".
+    # Strip jj's markers like "name*" (ahead of remote) / "name@origin".
     first = out.splitlines()[0].strip()
-    return first.rstrip("*").split("@", 1)[0] or None
+    return first.split("@", 1)[0].rstrip("*") or None
