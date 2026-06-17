@@ -18,9 +18,12 @@ once installed, `k4 cd dmihalcik/k4` lands on this checkout. `--editable` tracks
 your working copy, so edits take effect without reinstalling:
 
 ```bash
-git clone https://github.com/dmihalcik/k4 ~/dev/dmihalcik/k4/main   # or your fork
+jj git clone --colocate git@github.com:dmihalcik/k4.git ~/dev/dmihalcik/k4/main   # or your fork
 uv tool install --editable ~/dev/dmihalcik/k4/main
 ```
+
+`--colocate` gives you a jj repo backed by git, so `k4 .` works inside the
+checkout too.
 
 ### 2. Make sure it's on your `$PATH`
 
