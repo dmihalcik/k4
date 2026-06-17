@@ -13,11 +13,13 @@ Prerequisites: `jj`, `gh`, and (for the interactive picker) `fzf` on your `$PATH
 ### 1. Install the `k4` binary
 
 `k4` isn't published to PyPI yet, so install it from your local checkout.
-`--editable` tracks your working copy, so edits take effect without reinstalling:
+Clone it to the same path k4 itself uses (`~/dev/<org>/<repo>/main`) so that
+once installed, `k4 cd dmihalcik/k4` lands on this checkout. `--editable` tracks
+your working copy, so edits take effect without reinstalling:
 
 ```bash
-git clone https://github.com/dmihalcik/k4 ~/dev/k4   # or your fork
-uv tool install --editable ~/dev/k4
+git clone https://github.com/dmihalcik/k4 ~/dev/dmihalcik/k4/main   # or your fork
+uv tool install --editable ~/dev/dmihalcik/k4/main
 ```
 
 ### 2. Make sure it's on your `$PATH`
